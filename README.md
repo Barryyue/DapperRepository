@@ -94,6 +94,6 @@ QQ Email: `875755898@qq.com`
 Google Email:`huangzhongqiu25@gmail.com`
 
 
-Demo Address: http://dapperrepository.coolwecool.com
+Demo Address: http://dp.coolwecool.com
 
 All contents of this package are licensed under the [MIT license](https://opensource.org/licenses/MIT).
