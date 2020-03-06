@@ -12,3 +12,16 @@ D:\CoreDapperRepository\CoreDapperRepository.Services\obj\Debug\netcoreapp2.1\Co
 D:\CoreDapperRepository\CoreDapperRepository.Services\obj\Debug\netcoreapp2.1\CoreDapperRepository.Services.csproj.CopyComplete
 D:\CoreDapperRepository\CoreDapperRepository.Services\obj\Debug\netcoreapp2.1\CoreDapperRepository.Services.dll
 D:\CoreDapperRepository\CoreDapperRepository.Services\obj\Debug\netcoreapp2.1\CoreDapperRepository.Services.pdb
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Services\bin\Debug\netcoreapp2.1\CoreDapperRepository.Services.deps.json
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Services\bin\Debug\netcoreapp2.1\CoreDapperRepository.Services.dll
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Services\bin\Debug\netcoreapp2.1\CoreDapperRepository.Services.pdb
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Services\bin\Debug\netcoreapp2.1\CoreDapperRepository.Core.dll
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Services\bin\Debug\netcoreapp2.1\CoreDapperRepository.Data.dll
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Services\bin\Debug\netcoreapp2.1\CoreDapperRepository.Core.pdb
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Services\bin\Debug\netcoreapp2.1\CoreDapperRepository.Data.pdb
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Services\obj\Debug\netcoreapp2.1\CoreDapperRepository.Services.csprojAssemblyReference.cache
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Services\obj\Debug\netcoreapp2.1\CoreDapperRepository.Services.AssemblyInfoInputs.cache
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Services\obj\Debug\netcoreapp2.1\CoreDapperRepository.Services.AssemblyInfo.cs
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Services\obj\Debug\netcoreapp2.1\CoreDapperRepository.Services.csproj.CopyComplete
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Services\obj\Debug\netcoreapp2.1\CoreDapperRepository.Services.dll
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Services\obj\Debug\netcoreapp2.1\CoreDapperRepository.Services.pdb

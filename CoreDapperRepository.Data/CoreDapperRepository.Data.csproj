@@ -5,11 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="1.60.1" />
-    <PackageReference Include="DapperExtensions.NetCore" Version="2.0.6" />
-    <PackageReference Include="dotNetCore.Data.OracleClient" Version="1.0.1" />
+    <PackageReference Include="Dapper" Version="2.0.30" />
+    <PackageReference Include="Dapper.Contrib" Version="2.0.30" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
-    <PackageReference Include="MySql.Data" Version="8.0.15" />
+    <PackageReference Include="MySqlConnector" Version="0.62.0" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.60" />
+    <PackageReference Include="SqlKata" Version="1.1.7" />
   </ItemGroup>
 
   <ItemGroup>

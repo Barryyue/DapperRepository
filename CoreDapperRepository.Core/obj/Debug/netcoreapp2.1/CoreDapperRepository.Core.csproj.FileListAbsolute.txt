@@ -6,3 +6,10 @@ D:\CoreDapperRepository\CoreDapperRepository.Core\obj\Debug\netcoreapp2.1\CoreDa
 D:\CoreDapperRepository\CoreDapperRepository.Core\obj\Debug\netcoreapp2.1\CoreDapperRepository.Core.AssemblyInfo.cs
 D:\CoreDapperRepository\CoreDapperRepository.Core\obj\Debug\netcoreapp2.1\CoreDapperRepository.Core.dll
 D:\CoreDapperRepository\CoreDapperRepository.Core\obj\Debug\netcoreapp2.1\CoreDapperRepository.Core.pdb
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Core\bin\Debug\netcoreapp2.1\CoreDapperRepository.Core.deps.json
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Core\bin\Debug\netcoreapp2.1\CoreDapperRepository.Core.dll
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Core\bin\Debug\netcoreapp2.1\CoreDapperRepository.Core.pdb
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Core\obj\Debug\netcoreapp2.1\CoreDapperRepository.Core.AssemblyInfoInputs.cache
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Core\obj\Debug\netcoreapp2.1\CoreDapperRepository.Core.AssemblyInfo.cs
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Core\obj\Debug\netcoreapp2.1\CoreDapperRepository.Core.dll
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Core\obj\Debug\netcoreapp2.1\CoreDapperRepository.Core.pdb

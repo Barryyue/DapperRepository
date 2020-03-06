@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "aca2a8d7d015e4d5bdfdd7741604d46e364bccba"
+    "signature": ""
   },
   "compilationOptions": {},
   "targets": {
@@ -9,63 +9,60 @@
       "CoreDapperRepository.Data/1.0.0": {
         "dependencies": {
           "CoreDapperRepository.Core": "1.0.0",
-          "Dapper": "1.60.1",
-          "DapperExtensions.NetCore": "2.0.6",
-          "MySql.Data": "8.0.15",
-          "dotNetCore.Data.OracleClient": "1.0.1"
+          "Dapper": "2.0.30",
+          "Dapper.Contrib": "2.0.30",
+          "MySqlConnector": "0.62.0",
+          "Oracle.ManagedDataAccess.Core": "2.19.60",
+          "SqlKata": "1.1.7"
         },
         "runtime": {
           "CoreDapperRepository.Data.dll": {}
         }
       },
-      "Dapper/1.60.1": {
+      "Dapper/2.0.30": {
         "dependencies": {
-          "System.Reflection.TypeExtensions": "4.4.0"
+          "System.Reflection.Emit.Lightweight": "4.6.0"
         },
         "runtime": {
           "lib/netstandard2.0/Dapper.dll": {
-            "assemblyVersion": "1.60.0.0",
-            "fileVersion": "1.60.1.8373"
-          }
-        }
-      },
-      "DapperExtensions.NetCore/2.0.6": {
-        "dependencies": {
-          "Dapper": "1.60.1"
-        },
-        "runtime": {
-          "lib/netcoreapp2.1/DapperExtensions.dll": {
             "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.0.0.0"
+            "fileVersion": "2.0.30.32292"
           }
         }
       },
-      "dotNetCore.Data.OracleClient/1.0.1": {
-        "runtime": {
-          "lib/netstandard2.0/dotNetCore.Data.OracleClient.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "Google.Protobuf/3.5.1": {
-        "runtime": {
-          "lib/netstandard1.0/Google.Protobuf.dll": {
-            "assemblyVersion": "3.5.1.0",
-            "fileVersion": "3.5.1.0"
-          }
-        }
-      },
-      "Microsoft.Win32.Primitives/4.3.0": {},
-      "MySql.Data/8.0.15": {
+      "Dapper.Contrib/2.0.30": {
         "dependencies": {
-          "Google.Protobuf": "3.5.1",
-          "System.Configuration.ConfigurationManager": "4.4.1"
+          "Dapper": "2.0.30",
+          "Microsoft.CSharp": "4.6.0",
+          "System.Reflection.Emit": "4.6.0"
         },
         "runtime": {
-          "lib/netcoreapp2.0/MySql.Data.dll": {
-            "assemblyVersion": "8.0.15.0",
-            "fileVersion": "8.0.15.0"
+          "lib/netstandard2.0/Dapper.Contrib.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.30.32292"
+          }
+        }
+      },
+      "Microsoft.CSharp/4.6.0": {},
+      "Microsoft.NETCore.Platforms/3.1.0": {},
+      "Microsoft.Win32.Primitives/4.3.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.0"
+        }
+      },
+      "MySqlConnector/0.62.0": {
+        "runtime": {
+          "lib/netcoreapp2.1/MySqlConnector.dll": {
+            "assemblyVersion": "0.62.0.0",
+            "fileVersion": "0.62.0.0"
+          }
+        }
+      },
+      "Oracle.ManagedDataAccess.Core/2.19.60": {
+        "runtime": {
+          "lib/netstandard2.0/Oracle.ManagedDataAccess.dll": {
+            "assemblyVersion": "2.0.19.1",
+            "fileVersion": "2.0.19.1"
           }
         }
       },
@@ -86,13 +83,26 @@
           }
         }
       },
-      "runtime.native.System.Net.Security/4.3.0": {},
+      "runtime.native.System.Net.Security/4.3.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.0"
+        }
+      },
+      "SqlKata/1.1.7": {
+        "runtime": {
+          "lib/netstandard1.0/QueryBuilder.dll": {
+            "assemblyVersion": "1.1.7.0",
+            "fileVersion": "1.1.7.0"
+          }
+        }
+      },
       "StackExchange.Redis.StrongName/1.2.6": {
         "dependencies": {
           "System.Net.NameResolution": "4.3.0",
           "System.Net.Security": "4.3.0",
           "System.Net.Sockets": "4.3.0",
-          "System.Reflection.TypeExtensions": "4.4.0",
+          "System.Reflection.Emit": "4.6.0",
+          "System.Reflection.Emit.Lightweight": "4.6.0",
           "System.Threading.ThreadPool": "4.3.0",
           "System.Threading.Timer": "4.3.0"
         },
@@ -103,71 +113,104 @@
           }
         }
       },
-      "System.Configuration.ConfigurationManager/4.4.1": {
+      "System.IO.FileSystem.AccessControl/4.7.0": {
         "dependencies": {
-          "System.Security.Cryptography.ProtectedData": "4.4.0"
+          "System.Security.AccessControl": "4.7.0",
+          "System.Security.Principal.Windows": "4.7.0"
         },
         "runtime": {
-          "lib/netstandard2.0/System.Configuration.ConfigurationManager.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.6.25921.2"
+          "lib/netstandard2.0/System.IO.FileSystem.AccessControl.dll": {
+            "assemblyVersion": "4.0.5.0",
+            "fileVersion": "4.700.19.56404"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/netstandard2.0/System.IO.FileSystem.AccessControl.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "4.0.5.0",
+            "fileVersion": "4.700.19.56404"
           }
         }
       },
       "System.Linq.Parallel/4.3.0": {},
       "System.Net.NameResolution/4.3.0": {
-        "runtimeTargets": {
-          "runtime/unix/lib/_._": {
-            "rid": "unix",
-            "assetType": "runtime"
-          },
-          "runtime/win/lib/_._": {
-            "rid": "win",
-            "assetType": "runtime"
-          }
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.0",
+          "System.Security.Principal.Windows": "4.7.0"
         }
       },
       "System.Net.Security/4.3.0": {
         "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.0",
           "Microsoft.Win32.Primitives": "4.3.0",
           "System.Threading.ThreadPool": "4.3.0",
           "runtime.native.System.Net.Security": "4.3.0"
+        }
+      },
+      "System.Net.Sockets/4.3.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.0"
+        }
+      },
+      "System.Reflection.Emit/4.6.0": {},
+      "System.Reflection.Emit.Lightweight/4.6.0": {},
+      "System.Security.AccessControl/4.7.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.0",
+          "System.Security.Principal.Windows": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Security.AccessControl.dll": {
+            "assemblyVersion": "4.1.3.0",
+            "fileVersion": "4.700.19.56404"
+          }
         },
         "runtimeTargets": {
-          "runtime/unix/lib/_._": {
-            "rid": "unix",
-            "assetType": "runtime"
-          },
-          "runtime/win/lib/_._": {
+          "runtimes/win/lib/netcoreapp2.0/System.Security.AccessControl.dll": {
             "rid": "win",
-            "assetType": "runtime"
+            "assetType": "runtime",
+            "assemblyVersion": "4.1.3.0",
+            "fileVersion": "4.700.19.56404"
           }
         }
       },
-      "System.Net.Sockets/4.3.0": {},
-      "System.Reflection.TypeExtensions/4.4.0": {},
-      "System.Security.Cryptography.ProtectedData/4.4.0": {
+      "System.Security.Principal.Windows/4.7.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.0"
+        },
         "runtime": {
-          "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll": {
-            "assemblyVersion": "4.0.2.0",
-            "fileVersion": "4.6.25519.3"
+          "lib/netstandard2.0/System.Security.Principal.Windows.dll": {
+            "assemblyVersion": "4.1.3.0",
+            "fileVersion": "4.700.19.56404"
           }
         },
         "runtimeTargets": {
-          "runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll": {
+          "runtimes/unix/lib/netcoreapp2.1/System.Security.Principal.Windows.dll": {
+            "rid": "unix",
+            "assetType": "runtime",
+            "assemblyVersion": "4.1.3.0",
+            "fileVersion": "4.700.19.56404"
+          },
+          "runtimes/win/lib/netcoreapp2.1/System.Security.Principal.Windows.dll": {
             "rid": "win",
             "assetType": "runtime",
-            "assemblyVersion": "4.0.2.0",
-            "fileVersion": "4.6.25519.3"
+            "assemblyVersion": "4.1.3.0",
+            "fileVersion": "4.700.19.56404"
           }
         }
       },
       "System.Threading.ThreadPool/4.3.0": {},
-      "System.Threading.Timer/4.3.0": {},
+      "System.Threading.Timer/4.3.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.0"
+        }
+      },
       "System.ValueTuple/4.4.0": {},
       "CoreDapperRepository.Core/1.0.0": {
         "dependencies": {
-          "RedLock.net.StrongName": "2.1.0"
+          "RedLock.net.StrongName": "2.1.0",
+          "System.IO.FileSystem.AccessControl": "4.7.0"
         },
         "runtime": {
           "CoreDapperRepository.Core.dll": {}
@@ -181,52 +224,59 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Dapper/1.60.1": {
+    "Dapper/2.0.30": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-v8eekTHjIMEybch8VwkmaakAO1VpTA0q/kZlEjDlW74lP108UgFex1CyCV5FvgRuyHUkPSHTgYvs7loi3g+v/w==",
-      "path": "dapper/1.60.1",
-      "hashPath": "dapper.1.60.1.nupkg.sha512"
+      "sha512": "sha512-nL0VEpvunjIQ3jTI1x27b7BS3BnRnn5b2vhxsU2pWEd9SljF5WUQLoV/83qXTm0yaHmejRV/ndI3EApGlrgPqw==",
+      "path": "dapper/2.0.30",
+      "hashPath": "dapper.2.0.30.nupkg.sha512"
     },
-    "DapperExtensions.NetCore/2.0.6": {
+    "Dapper.Contrib/2.0.30": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-a6bGUPr7m1n1r/zwf6noLXQS7WnFP184KXA2cQx7GzdG9MNvZuI9noh87H5kZXfK1Sx4cFLvg8WlSDxraboKMg==",
-      "path": "dapperextensions.netcore/2.0.6",
-      "hashPath": "dapperextensions.netcore.2.0.6.nupkg.sha512"
+      "sha512": "sha512-JGolfLhdswl8/TiX3tOWeR2KcbKUk4QeRj8H1nQrmaGHjyfhFlVUI2oK0z30hfnSS/5hWYndB1KMKVn5+bnJig==",
+      "path": "dapper.contrib/2.0.30",
+      "hashPath": "dapper.contrib.2.0.30.nupkg.sha512"
     },
-    "dotNetCore.Data.OracleClient/1.0.1": {
+    "Microsoft.CSharp/4.6.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-tF1qqkjq1o3JzkuL+iqBgumUiMQnaFeU/9Pn7yTSSirnS8RfPCAsGQnBMEQYMjaaSxAnD/0AdBInOestcL9enA==",
-      "path": "dotnetcore.data.oracleclient/1.0.1",
-      "hashPath": "dotnetcore.data.oracleclient.1.0.1.nupkg.sha512"
+      "sha512": "sha512-kxn3M2rnAGy5N5DgcIwcE8QTePWU/XiYcQVzn9HqTls2NKluVzVSmVWRjK7OUPWbljCXuZxHyhEz9kPRIQeXow==",
+      "path": "microsoft.csharp/4.6.0",
+      "hashPath": "microsoft.csharp.4.6.0.nupkg.sha512"
     },
-    "Google.Protobuf/3.5.1": {
+    "Microsoft.NETCore.Platforms/3.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-j/gbpRZ68sgvdi/vXI39Cj/jWG4d1dtDqfWbkjC9dErNWu/dFcIlq1LIgLscea+llZ6nzm06wz/JGziOegAL7Q==",
-      "path": "google.protobuf/3.5.1",
-      "hashPath": "google.protobuf.3.5.1.nupkg.sha512"
+      "sha512": "sha512-z7aeg8oHln2CuNulfhiLYxCVMPEwBl3rzicjvIX+4sUuCwvXw5oXQEtbiU2c0z4qYL5L3Kmx0mMA/+t/SbY67w==",
+      "path": "microsoft.netcore.platforms/3.1.0",
+      "hashPath": "microsoft.netcore.platforms.3.1.0.nupkg.sha512"
     },
     "Microsoft.Win32.Primitives/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Gi0X4DWV4HSCGNmG/g1mu36N0UhsQhuqp3cDrZUZKg7RT3//K+IFrBdRSUmO97YngGnqC8O2tHL204d9rnL58A==",
+      "sha512": "sha512-9ZQKCWxH7Ijp9BfahvL2Zyf1cJIk8XYLF6Yjzr2yi0b2cOut/HQ31qf1ThHAgCc3WiZMdnWcfJCgN82/0UunxA==",
       "path": "microsoft.win32.primitives/4.3.0",
       "hashPath": "microsoft.win32.primitives.4.3.0.nupkg.sha512"
     },
-    "MySql.Data/8.0.15": {
+    "MySqlConnector/0.62.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ZKqJdSsIHoBQZbGUT6KNWdq+22NBPLxcrsnBj5BSLmVePRhrlCQew8jq38hLoJCoubdc4zP1D0xJo3DYgeuIpg==",
-      "path": "mysql.data/8.0.15",
-      "hashPath": "mysql.data.8.0.15.nupkg.sha512"
+      "sha512": "sha512-YK/w5e3tE19eF5lhdErcQUb6SWp5tqlTUZG2nKRDFs2u7xiq0xX8tQdd8sJH/z6ewgs0Bk4Eb0hKAOHDloc39Q==",
+      "path": "mysqlconnector/0.62.0",
+      "hashPath": "mysqlconnector.0.62.0.nupkg.sha512"
+    },
+    "Oracle.ManagedDataAccess.Core/2.19.60": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hQqREt883jwr0LYrYgOtkqgZ3TbEyCGm/eekwA1Vth66aD66752PRKBbTvM9b1a71ewuvaXRy2T9KVwlSMYaTw==",
+      "path": "oracle.manageddataaccess.core/2.19.60",
+      "hashPath": "oracle.manageddataaccess.core.2.19.60.nupkg.sha512"
     },
     "RedLock.net.StrongName/2.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Yh6HuI4tqS3Gs0/9svlGUcofDUH6hPFMeSl2C/1O3FxyfJ0Ntou+HKqcruMxOhFdXfVPdi9OnmRCrG/kUbAWKw==",
+      "sha512": "sha512-pQDc48LdW8SvEbfxc2cLtwkqfGNwdVHohXZVgZYS7X1kBGO3Jx6HHeIM12rpAkgfHYG9/1zv8jCBLZ8YumOWOA==",
       "path": "redlock.net.strongname/2.1.0",
       "hashPath": "redlock.net.strongname.2.1.0.nupkg.sha512"
     },
@@ -237,19 +287,26 @@
       "path": "runtime.native.system.net.security/4.3.0",
       "hashPath": "runtime.native.system.net.security.4.3.0.nupkg.sha512"
     },
+    "SqlKata/1.1.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KLWXFCrDOnPn5otEmhkdy12hepK2jylLkveqWYWkLW2XQzuSxl1ctGqe/6VIvo+AQQlrU6SjWOVmoTFAhJQ7mw==",
+      "path": "sqlkata/1.1.7",
+      "hashPath": "sqlkata.1.1.7.nupkg.sha512"
+    },
     "StackExchange.Redis.StrongName/1.2.6": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-gIXD2xaDra46atvl1pR199FWFqAWa61hVDURrRfv2/QnxXSOpQbAVXWtSQkRQTT4Pqit6v+3OSnyHSd+RfA4Gg==",
+      "sha512": "sha512-UFmT1/JYu1PLiRwkyvEPVHk/tVTJa8Ka2rb9yzidzDoQARvhBVRpaWUeaP81373v54jupDBvAoGHGl0EY/HphQ==",
       "path": "stackexchange.redis.strongname/1.2.6",
       "hashPath": "stackexchange.redis.strongname.1.2.6.nupkg.sha512"
     },
-    "System.Configuration.ConfigurationManager/4.4.1": {
+    "System.IO.FileSystem.AccessControl/4.7.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-LoSjM/kLDpyLyoGsmwS5oVMRzHf/0XHkRpr3QZu/HuAv6Sfk919usTMLqD9N9VK3S4Q2+bd3tKJ0ko4MYFfq4Q==",
-      "path": "system.configuration.configurationmanager/4.4.1",
-      "hashPath": "system.configuration.configurationmanager.4.4.1.nupkg.sha512"
+      "sha512": "sha512-vMToiarpU81LR1/KZtnT7VDPvqAZfw9oOS5nY6pPP78nGYz3COLsQH3OfzbR+SjTgltd31R6KmKklz/zDpTmzw==",
+      "path": "system.io.filesystem.accesscontrol/4.7.0",
+      "hashPath": "system.io.filesystem.accesscontrol.4.7.0.nupkg.sha512"
     },
     "System.Linq.Parallel/4.3.0": {
       "type": "package",
@@ -275,23 +332,37 @@
     "System.Net.Sockets/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ka8cLXu8Leg/CNnxWK1kP/bOkrNALL4tBxJRU7YhixHwPWTREB1m1diVLChRl31eG2XlMMUifWBDu08WR53ebQ==",
+      "sha512": "sha512-m6icV6TqQOAdgt5N/9I5KNpjom/5NFtkmGseEH+AK/hny8XrytLH3+b5M8zL/Ycg3fhIocFpUMyl/wpFnVRvdw==",
       "path": "system.net.sockets/4.3.0",
       "hashPath": "system.net.sockets.4.3.0.nupkg.sha512"
     },
-    "System.Reflection.TypeExtensions/4.4.0": {
+    "System.Reflection.Emit/4.6.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-dkmh/ySlwnXJp/1qYP9uyKkCK1CXR/REFzl7abHcArxBcV91mY2CgrrzSRA5Z/X4MevJWwXsklGRdR3A7K9zbg==",
-      "path": "system.reflection.typeextensions/4.4.0",
-      "hashPath": "system.reflection.typeextensions.4.4.0.nupkg.sha512"
+      "sha512": "sha512-qAo4jyXtC9i71iElngX7P2r+zLaiHzxKwf66sc3X91tL5Ks6fnQ1vxL04o7ZSm3sYfLExySL7GN8aTpNYpU1qw==",
+      "path": "system.reflection.emit/4.6.0",
+      "hashPath": "system.reflection.emit.4.6.0.nupkg.sha512"
     },
-    "System.Security.Cryptography.ProtectedData/4.4.0": {
+    "System.Reflection.Emit.Lightweight/4.6.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-WwEexvBd+17yfY7fcS+fBGl+HADEfCJuKeDJqBT7D6j6vKwYvfLyGuq2y/MmrKORC6mbYwth7kjinO1mPhTL3g==",
-      "path": "system.security.cryptography.protecteddata/4.4.0",
-      "hashPath": "system.security.cryptography.protecteddata.4.4.0.nupkg.sha512"
+      "sha512": "sha512-j/V5HVvxvBQ7uubYD0PptQW2KGsi1Pc2kZ9yfwLixv3ADdjL/4M78KyC5e+ymW612DY8ZE4PFoZmWpoNmN2mqg==",
+      "path": "system.reflection.emit.lightweight/4.6.0",
+      "hashPath": "system.reflection.emit.lightweight.4.6.0.nupkg.sha512"
+    },
+    "System.Security.AccessControl/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JECvTt5aFF3WT3gHpfofL2MNNP6v84sxtXxpqhLBCcDRzqsPBmHhQ6shv4DwwN2tRlzsUxtb3G9M3763rbXKDg==",
+      "path": "system.security.accesscontrol/4.7.0",
+      "hashPath": "system.security.accesscontrol.4.7.0.nupkg.sha512"
+    },
+    "System.Security.Principal.Windows/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ojD0PX0XhneCsUbAZVKdb7h/70vyYMDYs85lwEI+LngEONe/17A0cFaRFqZU+sOEidcVswYWikYOQ9PPfjlbtQ==",
+      "path": "system.security.principal.windows/4.7.0",
+      "hashPath": "system.security.principal.windows.4.7.0.nupkg.sha512"
     },
     "System.Threading.ThreadPool/4.3.0": {
       "type": "package",
@@ -303,7 +374,7 @@
     "System.Threading.Timer/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-QqrGcSkPUlnGVZuh23Rj/LP97xWZkbrsVGDybKj+EmHN9vDjpBZr4k7RTVpJgwMahzsuDqW3btXbb1sBNjj0IQ==",
+      "sha512": "sha512-Z6YfyYTCg7lOZjJzBjONJTFKGN9/NIYKSxhU5GRd+DTwHSZyvWp1xuI5aR+dLg+ayyC5Xv57KiY4oJ0tMO89fQ==",
       "path": "system.threading.timer/4.3.0",
       "hashPath": "system.threading.timer.4.3.0.nupkg.sha512"
     },

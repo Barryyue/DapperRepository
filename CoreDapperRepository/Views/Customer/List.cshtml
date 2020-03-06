@@ -8,10 +8,6 @@
     }
 </style>
 
-<h2 style="text-align: center;">
-    The current data source is from <strong>@ViewBag.DbSource</strong> and response server is <strong>SERVER1</strong>
-</h2>
-<br />
 <form class="layui-form layui-form-pane">
     <div class="layui-form-item">
         <label class="layui-form-label">Username</label>
@@ -20,11 +16,9 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <div class="layui-item">
-            <label class="layui-form-label">Email</label>
-            <div class="layui-input-block">
-                <input type="text" id="search-email" class="layui-input">
-            </div>
+        <label class="layui-form-label">Email</label>
+        <div class="layui-input-block">
+            <input type="text" id="search-email" class="layui-input">
         </div>
     </div>
 </form>
@@ -40,4 +34,5 @@
     <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">Edit</a>
     <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">Delete</a>
 </script>
+
 <script src="~/js/customer-list.js"></script>
