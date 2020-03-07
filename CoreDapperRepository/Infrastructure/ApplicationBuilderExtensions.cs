@@ -140,7 +140,7 @@ namespace CoreDapperRepository.Web.Infrastructure
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Customer}/{action=List}/{id?}");
+                    template: "{controller=Customer}/{action=Index}/{id?}");
             });
         }
 

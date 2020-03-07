@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoreDapperRepository.Core.Domain.Customers
 {
+    [Table(nameof(Customer))]
     public class Customer : BaseEntity
     {
         public string Username { get; set; }
@@ -9,6 +11,8 @@ namespace CoreDapperRepository.Core.Domain.Customers
         public string Email { get; set; }
 
         public bool Active { get; set; }
+
+        public bool Deleted { get; set; }
 
         public DateTime CreationTime { get; set; }
     }

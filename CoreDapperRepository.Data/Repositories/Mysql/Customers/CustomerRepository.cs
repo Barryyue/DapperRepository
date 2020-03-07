@@ -1,164 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using CoreDapperRepository.Core.Configuration;
-using Dapper;
+using System.Threading.Tasks;
 using CoreDapperRepository.Core.Data;
 using CoreDapperRepository.Core.Domain.Customers;
 using CoreDapperRepository.Data.Repositories.BaseInterfaces;
+using Dapper;
+using SqlKata;
 
 namespace CoreDapperRepository.Data.Repositories.Mysql.Customers
 {
-    public class CustomerRepository : MysqlRepositoryBase<Customer>, ICustomerRepository, IMysqlRepository
+    public class CustomerRepository : MysqlRepositoryBase<Customer>, ICustomerRepository
     {
-        public CustomerRepository(IDbConnConfig connConfig) : base(connConfig)
+        public virtual async Task<Customer> GetCustomerByIdAsync(int id)
         {
+            var customer = await GetAsync(id);
+
+            return customer;
         }
 
-        public Customer GetCustomerById(int id)
+        public virtual async Task<Customer> GetCustomerByAsync(string name, string email)
         {
-            if (id == 0)
-                return null;
+            var query = new Query(TableName).Select("Username", "Email", "Active", "CreationTime").WhereFalse("Deleted");
 
-            string sql = $"SELECT Id,Username,Email,Active,CreationTime FROM {TableName} WHERE Id = @id";
-            return GetById(sql, new { id }, commandType: CommandType.Text);
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.WhereContains("Username", name);
+            }
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                query = query.WhereContains("Email", email);
+            }
+
+            var sqlResult = GetSqlResult(query);
+
+            return await GetFirstOrDefaultAsync(sqlResult.Sql, sqlResult.NamedBindings);
         }
 
-        public CustomerDtoModel GetCustomerBy(int id)
+        public virtual async Task<IEnumerable<Customer>> GetAllCustomersAsync()
         {
-            StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("SELECT c.Id,c.Username,c.Email,c.Active,c.CreationTime,cr.Id,cr.Name,cr.SystemName FROM {0} c ", TableName);
-            builder.Append("JOIN `Customer_CustomerRole_Mapping` crm ON c.Id = crm.CustomerId ");
-            builder.Append("JOIN `CustomerRole` cr ON crm.CustomerRoleId = cr.Id WHERE c.Id = @id");
+            var query = new Query(TableName).Select("Username", "Email", "Active", "CreationTime").WhereFalse("Deleted");
 
-            string sql = builder.ToString();
-            IDbSession session = DbSession;
+            var sqlResult = GetSqlResult(query);
 
-            try
-            {
-                var customers = session.Connection.Query<CustomerDtoModel, CustomerRole, CustomerDtoModel>(sql, (c, cr) =>
-                    {
-                        c.CustomerRole = cr;
-                        return c;
-                    }, new { id }).FirstOrDefault();
-
-                return customers;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            finally
-            {
-                session.Dispose();
-            }
+            return await GetListAsync(sqlResult.Sql, sqlResult.NamedBindings);
         }
 
-        public int GetCustomerCount(string username = "", string email = "")
+        public virtual async Task<Tuple<int, IEnumerable<Customer>>> GetPagedCustomers(string username, string email, int pageIndex, int pageSize)
         {
-            StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("SELECT COUNT({0}) FROM {1} WHERE 1=1 ", (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(email)) ? "*" : "Username", TableName);
-            IDbSession session = DbSession;
+            #region TotalCount
 
-            try
+            IDbSession session = await Task.Run(() => DbSession);
+
+            var totalCountQuery = new Query(TableName).WhereFalse("Deleted").AsCount();
+
+            if (!string.IsNullOrEmpty(username))
             {
-                int result;
-
-                if (!string.IsNullOrEmpty(username) || !string.IsNullOrEmpty(email))
-                {
-                    DynamicParameters parameters = new DynamicParameters();
-
-                    if (!string.IsNullOrEmpty(username))
-                    {
-                        builder.Append("AND Username LIKE CONCAT(@Username,'%') ");
-                        parameters.Add("Username", username, DbType.String);
-                    }
-                    if (!string.IsNullOrEmpty(email))
-                    {
-                        builder.Append("AND Email LIKE CONCAT(@Email,'%')");
-                        parameters.Add("Email", email, DbType.String);
-                    }
-                    builder.Append(";");
-
-                    result = session.Connection.Query<int>(builder.ToString(), parameters, commandType: CommandType.Text).FirstOrDefault();
-                }
-                else
-                {
-                    builder.Append(";");
-                    result = session.Connection.Query<int>(builder.ToString(), commandType: CommandType.Text).FirstOrDefault();
-                }
-
-                return result;
+                totalCountQuery = totalCountQuery.WhereStarts("Username", username);
             }
-            catch
+            if (!string.IsNullOrEmpty(email))
             {
-                return 0;
+                totalCountQuery = totalCountQuery.WhereStarts("Email", email);
             }
-            finally
-            {
-                session.Dispose();
-            }
-        }
 
-        public int InsertList(out long time, List<Customer> customers, int roleId)
-        {
-            // 用于获取插入运行时间
-            Stopwatch stopwatch = new Stopwatch();
+            SqlResult totalCountResult = GetSqlResult(totalCountQuery);
 
-            StringBuilder builder = new StringBuilder(50);
-            builder.AppendFormat("INSERT INTO {0}( Username,Email,Active,CreationTime ) VALUES ( @Username,@Email,@Active,@CreationTime );", TableName);
-            builder.AppendFormat("INSERT INTO `Customer_CustomerRole_Mapping`( CustomerId,CustomerRoleId ) VALUES ( LAST_INSERT_ID(),{0});", roleId);
+            int totalCount = await session.Connection.QueryFirstOrDefaultAsync<int>(totalCountResult.Sql, totalCountResult.NamedBindings);
 
-            stopwatch.Start();
+            #endregion
 
-            int result = Execute(builder.ToString(), customers);
-
-            stopwatch.Stop();
-
-            time = stopwatch.ElapsedMilliseconds;
-
-            return result;
-        }
-
-        public IEnumerable<CustomerDtoModel> GetAllCustomers()
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("SELECT c.Id,c.Username,c.Email,c.Active,c.CreationTime,cr.Id,cr.Name,cr.SystemName FROM {0} c ", TableName);
-            builder.Append("JOIN `Customer_CustomerRole_Mapping` crm ON c.Id = crm.CustomerId ");
-            builder.Append("JOIN `CustomerRole` cr ON crm.CustomerRoleId = cr.Id ORDER BY c.Id DESC");
-
-            string sql = builder.ToString();
-            IDbSession session = DbSession;
-
-            try
-            {
-                session.BeginTrans();
-
-                var customers = session.Connection.Query<CustomerDtoModel, CustomerRole, CustomerDtoModel>(sql, (c, cr) =>
-                {
-                    c.CustomerRole = cr;
-                    return c;
-                }, transaction: session.Transaction);
-                session.Commit();
-
-                return customers;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            finally
-            {
-                session.Dispose();
-            }
-        }
-
-        public IEnumerable<CustomerDtoModelForPage> GetPagedCustomers(int totalCount, string username = "", string email = "", int pageIndex = 0, int pageSize = int.MaxValue, bool useStoredProcedure = false)
-        {
-            IDbSession session = DbSession;
+            #region Paged Customers
 
             int totalPage = totalCount <= pageSize ? 1 : totalCount > pageSize && totalCount < (pageSize * 2) ? 2 : totalCount / pageSize; // 总页数
 
@@ -173,109 +86,89 @@ namespace CoreDapperRepository.Data.Repositories.Mysql.Customers
             if (isLastPage)
             {
                 lastPageSize = totalCount % pageSize; // 取模得到最后一页的记录数
-                descBound = descBound - lastPageSize; // 重新计算最后一页的偏移量
+                descBound -= lastPageSize; // 重新计算最后一页的偏移量
             }
             else
             {
-                descBound = descBound - pageSize; // 正常重新计算除最后一页的偏移量
+                descBound -= pageSize; // 正常重新计算除最后一页的偏移量
             }
 
             bool useDescOrder = pageIndex <= midPage; // 判断是否采取倒排优化
 
-            DynamicParameters parameters = new DynamicParameters();
+            Query customerQuery = new Query(TableName).Select("Id", "Username", "Email", "Active", "CreationTime").WhereFalse("Deleted");
 
-            parameters.Add("Username", username, DbType.String);
-            parameters.Add("Email", email, DbType.String);
-            parameters.Add("PageLowerBound", useDescOrder ? pageIndex * pageSize : descBound, DbType.Int32);
-            parameters.Add("PageSize", isLastPage ? lastPageSize : pageSize, DbType.Int32);
-            parameters.Add("UseDescOrder", useDescOrder ? 1 : 0, DbType.Int32);
+            if (!string.IsNullOrEmpty(username))
+            {
+                customerQuery = customerQuery.WhereStarts("Username", username);
+            }
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                customerQuery = customerQuery.WhereStarts("Email", email);
+            }
+
+            customerQuery = customerQuery.Limit(isLastPage ? lastPageSize : pageSize).Offset(useDescOrder ? pageIndex * pageSize : descBound);
+
+            customerQuery = useDescOrder ? customerQuery.OrderByDesc("Id") : customerQuery.OrderBy("Id");
+
+            SqlResult customerResult = GetSqlResult(customerQuery);
 
             try
             {
-                //session.BeginTrans();
+                var customers = await session.Connection.QueryAsync<Customer>(customerResult.Sql, customerResult.NamedBindings);
 
-                IEnumerable<CustomerDtoModelForPage> customers;
-
-                if (useStoredProcedure)
-                {
-                    customers = session.Connection.Query<CustomerDtoModelForPage>("DRD_Customer_GetAllCustomers_Test", parameters, session.Transaction, commandType: CommandType.StoredProcedure);
-                }
-                else
-                {
-                    StringBuilder builder = new StringBuilder(50);
-
-                    builder.AppendFormat("SELECT c.Id,c.Username,c.Email,c.Active,c.CreationTime,ccrm.CustomerRoleId FROM {0} c ", TableName);
-                    builder.Append("INNER JOIN `Customer_CustomerRole_Mapping` ccrm ON c.Id = ccrm.CustomerId ");
-                    builder.AppendFormat("INNER JOIN (SELECT Id FROM {0} WHERE 1 = 1 ", TableName);
-                    if (!string.IsNullOrEmpty(username))
-                    {
-                        builder.Append("AND Username LIKE CONCAT(@Username,'%') ");
-                    }
-                    if (!string.IsNullOrEmpty(email))
-                    {
-                        builder.Append("AND Email LIKE CONCAT(@Email,'%') ");
-                    }
-                    builder.AppendFormat("{0} LIMIT @PageLowerBound, @PageSize) AS cu USING (Id) ", useDescOrder ? "ORDER BY Id DESC" : "ORDER BY Id");
-
-                    builder.Append("ORDER BY c.Id DESC;");
-
-                    customers = session.Connection.Query<CustomerDtoModelForPage>(builder.ToString(), parameters, session.Transaction, commandType: CommandType.Text);
-                }
-
-                //session.Commit();
-
-                return customers;
-
+                return new Tuple<int, IEnumerable<Customer>>(totalCount, customers);
             }
-            catch
+            catch (Exception e)
             {
-                // log error
-
-                return null;
+                Console.WriteLine(e);
+                throw;
             }
             finally
             {
                 session.Dispose();
             }
+
+            #endregion
         }
 
-        public int InsertCustomer(Customer customer, int roleId)
+        public virtual async Task<int> InsertCustomerAsync(Customer customer)
         {
-            StringBuilder builder = new StringBuilder(50);
-            builder.AppendFormat("INSERT INTO {0}( Username,Email,Active,CreationTime ) VALUES ( @Username,@Email,@Active,@CreationTime );", TableName);
-            builder.Append("INSERT INTO `Customer_CustomerRole_Mapping`( CustomerId,CustomerRoleId ) VALUES ( LAST_INSERT_ID(),@roleId );");
+            if (customer == null)
+                throw new ArgumentNullException(nameof(customer));
 
-            return Execute(builder.ToString(), new
-            {
-                customer.Username,
-                customer.Email,
-                customer.Active,
-                customer.CreationTime,
-                roleId
-            }, commandType: CommandType.Text);
+            return await InsertAsync(customer);
         }
 
-        /// <summary>
-        /// 更新信息（事实上用户有可能具有多个角色，我这里为了演示方便就假设用户只有一个角色处理了）
-        /// </summary>
-        /// <param name="customer"></param>
-        /// <param name="roleId">对应角色id</param>
-        /// <returns></returns>
-        public int UpdateCustomer(Customer customer, int roleId)
+        public virtual async Task<int> InsertCustomerListAsync(List<Customer> customers)
         {
-            StringBuilder builder = new StringBuilder(50);
-            builder.AppendFormat("UPDATE {0} SET Username = @Username,Email = @Email,Active = @Active WHERE Id = @Id;", TableName);
-            builder.Append("UPDATE `Customer_CustomerRole_Mapping` SET CustomerRoleId = @CustomerRoleId WHERE CustomerId = @CustomerId;");
-
-            return Execute(builder.ToString(), new
+            if (customers != null && customers.Any())
             {
-                customer.Username,
-                customer.Email,
-                customer.Active,
-                customer.Id,
-                CustomerRoleId = roleId,
-                CustomerId = customer.Id
-            }, commandType: CommandType.Text);
+                StringBuilder builder = new StringBuilder(50);
+                builder.AppendFormat("INSERT INTO `{0}`( Username,Email,Active,Deleted,CreationTime ) VALUES ( @Username,@Email,@Active,@Deleted,@CreationTime );", TableName);
+
+                int result = await ExecuteAsync(builder.ToString(), customers);
+
+                return result;
+            }
+
+            return 0;
+        }
+
+        public virtual async Task<bool> UpdateCustomerAsync(Customer customer)
+        {
+            if (customer == null)
+                throw new ArgumentNullException(nameof(customer));
+
+            return await UpdateAsync(customer);
+        }
+
+        public virtual async Task<bool> DeleteCustomerAsync(Customer customer)
+        {
+            if (customer == null)
+                throw new ArgumentNullException(nameof(customer));
+
+            return await DeleteAsync(customer);
         }
     }
 }

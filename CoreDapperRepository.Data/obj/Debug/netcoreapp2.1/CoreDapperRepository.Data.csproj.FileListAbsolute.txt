@@ -12,3 +12,16 @@ D:\CoreDapperRepository\CoreDapperRepository.Data\obj\Debug\netcoreapp2.1\CoreDa
 D:\CoreDapperRepository\CoreDapperRepository.Data\obj\Debug\netcoreapp2.1\CoreDapperRepository.Data.csproj.CopyComplete
 D:\CoreDapperRepository\CoreDapperRepository.Data\obj\Debug\netcoreapp2.1\CoreDapperRepository.Data.dll
 D:\CoreDapperRepository\CoreDapperRepository.Data\obj\Debug\netcoreapp2.1\CoreDapperRepository.Data.pdb
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Data\bin\Debug\netcoreapp2.1\CoreDapperRepository.Data.deps.json
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Data\bin\Debug\netcoreapp2.1\CoreDapperRepository.Data.runtimeconfig.json
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Data\bin\Debug\netcoreapp2.1\CoreDapperRepository.Data.runtimeconfig.dev.json
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Data\bin\Debug\netcoreapp2.1\CoreDapperRepository.Data.dll
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Data\bin\Debug\netcoreapp2.1\CoreDapperRepository.Data.pdb
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Data\bin\Debug\netcoreapp2.1\CoreDapperRepository.Core.dll
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Data\bin\Debug\netcoreapp2.1\CoreDapperRepository.Core.pdb
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Data\obj\Debug\netcoreapp2.1\CoreDapperRepository.Data.csprojAssemblyReference.cache
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Data\obj\Debug\netcoreapp2.1\CoreDapperRepository.Data.AssemblyInfoInputs.cache
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Data\obj\Debug\netcoreapp2.1\CoreDapperRepository.Data.AssemblyInfo.cs
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Data\obj\Debug\netcoreapp2.1\CoreDapperRepository.Data.csproj.CopyComplete
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Data\obj\Debug\netcoreapp2.1\CoreDapperRepository.Data.dll
+D:\GithubProjects\DapperRepository\CoreDapperRepository.Data\obj\Debug\netcoreapp2.1\CoreDapperRepository.Data.pdb

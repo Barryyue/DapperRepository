@@ -1,12 +1,12 @@
-﻿using CoreDapperRepository.Core.Configuration;
-using CoreDapperRepository.Core.Data;
+﻿using CoreDapperRepository.Core.Data;
 using CoreDapperRepository.Core.Domain;
+using SqlKata;
 
 namespace CoreDapperRepository.Data
 {
     public abstract class RepositoryDataTypeBase
     {
-        protected IDbSession DbSession => SessionFactory.CreateSession(DataType, ConnStrKey, DbConnConfig);
+        protected IDbSession DbSession => SessionFactory.CreateSession(DataType, ConnStrKey);
 
         /// <summary>
         /// 当前数据库连接串的key
@@ -23,9 +23,6 @@ namespace CoreDapperRepository.Data
         /// </summary>
         protected abstract string TableName { get; }
 
-        /// <summary>
-        /// 数据连接串配置接口
-        /// </summary>
-        protected abstract IDbConnConfig DbConnConfig { get; set; }
+        protected abstract SqlResult GetSqlResult(Query query);
     }
 }

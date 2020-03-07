@@ -1,49 +1,84 @@
-﻿using System.Data;
-using System.Data.OracleClient;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
-using CoreDapperRepository.Core.Configuration;
+using System.IO;
+using CoreDapperRepository.Core;
 using CoreDapperRepository.Core.Data;
 using CoreDapperRepository.Core.Domain;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
+using Oracle.ManagedDataAccess.Client;
 
 namespace CoreDapperRepository.Data
 {
     public class SessionFactory
     {
-        private static IDbConnection CreateConnection(DatabaseType dataType = DatabaseType.Mssql, string connStrKey = "", IDbConnConfig connConfig = null)
+        private static IDbConnection CreateConnection(DatabaseType dataType = DatabaseType.Mssql, string connStrKey = "")
         {
-            IDbConnection conn;
-            switch (dataType)
+            try
             {
-                case DatabaseType.Mssql:
-                    conn = new SqlConnection(connConfig != null ? connConfig.GetConnectionString(connStrKey) : string.Empty);
-                    break;
+                IDbConnection conn;
 
-                case DatabaseType.Mysql:
-                    conn = new MySqlConnection(connConfig != null ? connConfig.GetConnectionString(connStrKey) : string.Empty);
-                    break;
+                string connectionString = GetConnectionString(connStrKey);
 
-                case DatabaseType.Oracle:
-                    conn = new OracleConnection(connConfig != null ? connConfig.GetConnectionString(connStrKey) : string.Empty);
-                    break;
+                switch (dataType)
+                {
+                    case DatabaseType.Mssql:
+                        conn = new SqlConnection(connectionString);
+                        break;
 
-                default:
-                    conn = new SqlConnection(connConfig != null ? connConfig.GetConnectionString(connStrKey) : string.Empty);
-                    break;
+                    case DatabaseType.Mysql:
+                        conn = new MySqlConnection(connectionString);
+                        break;
+
+                    case DatabaseType.Oracle:
+                        conn = new OracleConnection(connectionString);
+                        break;
+
+                    default:
+                        conn = new SqlConnection(connectionString);
+                        break;
+                }
+
+                conn.Open();
+
+                return conn;
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
 
-            conn.Open();
+        private static string GetConnectionString(string connStrKey)
+        {
+            if (string.IsNullOrEmpty(connStrKey))
+                return string.Empty;
 
-            return conn;
+            string filePath = CommonHelper.DefaultFileProvider.MapPath("/App_Data/DbConnSettings.json");
+
+            if (!File.Exists(filePath))
+                return string.Empty;
+
+            string text = File.ReadAllText(filePath);
+
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
+
+            Dictionary<string, string> connStrDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(text);
+
+            return connStrDict[connStrKey];
         }
 
         /// <summary>
         /// 创建数据库连接会话
         /// </summary>
         /// <returns></returns>
-        public static IDbSession CreateSession(DatabaseType databaseType, string key, IDbConnConfig connConfig)
+        public static IDbSession CreateSession(DatabaseType databaseType, string key)
         {
-            IDbConnection conn = CreateConnection(databaseType, key, connConfig);
+            IDbConnection conn = CreateConnection(databaseType, key);
             IDbSession session = new DbSession(conn);
             return session;
         }

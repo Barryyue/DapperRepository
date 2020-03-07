@@ -2,24 +2,29 @@
 using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using CoreDapperRepository.Core;
 using CoreDapperRepository.Core.Cache;
 using CoreDapperRepository.Core.Configuration;
 using CoreDapperRepository.Core.Constants;
+using CoreDapperRepository.Core.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json.Serialization;
 
 namespace CoreDapperRepository.Web.Infrastructure
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceProvider ConfigureApplicationServices(this IServiceCollection services,
+        public static IServiceProvider ConfigureApplicationServices(this IServiceCollection services,IHostingEnvironment hostingEnvironment,
             IConfiguration configuration)
         {
             services.ConfigureStartupConfig<AppConfig>(configuration.GetSection("App"));
+
+            CommonHelper.DefaultFileProvider = new AppFileProvider(hostingEnvironment.ContentRootPath);
 
             //AddHttpContextAccessor(services);
 
@@ -90,15 +95,20 @@ namespace CoreDapperRepository.Web.Infrastructure
             // in the ServiceCollection. Mix and match as needed.
             builder.Populate(services);
 
-            builder.RegisterType<RedisConnectionWrapper>()
+            if (bool.Parse(configuration.GetSection("AppConfig:RedisEnabled").Value))
+            {
+                builder.RegisterType<RedisConnectionWrapper>()
                     .As<ILocker>()
                     .As<IRedisConnectionWrapper>()
                     .SingleInstance();
-            builder.RegisterType<RedisCacheManager>().As<IStaticCacheManager>().InstancePerLifetimeScope();
 
-            string dbTypeName = configuration.GetSection("DapperRepositoryConfig").GetSection("CurrentDbTypeName").Value;
+                RegisterMore(builder, x =>
+                {
+                    x.RegisterType<RedisCacheManager>().As<IStaticCacheManager>().InstancePerLifetimeScope();
+                });
+            }
 
-            switch (dbTypeName)
+            switch (configuration.GetSection("AppConfig:CurrentDbTypeName").Value)
             {
                 case ConnKeyConstants.Mssql:
 
@@ -139,8 +149,6 @@ namespace CoreDapperRepository.Web.Infrastructure
 
                     break;
             }
-
-            RegisterMore(builder, x => { x.RegisterType<DbConnConfig>().As<IDbConnConfig>().InstancePerLifetimeScope(); });
 
             var container = builder.Build();
 
