@@ -22,8 +22,7 @@ namespace CoreDapperRepository.Data.Repositories.Mssql.Customers
 
         public virtual async Task<Customer> GetCustomerByAsync(string name, string email)
         {
-            var query = new Query(TableName).Select("Username", "Email", "Active", "CreationTime")
-                .WhereFalse("Deleted");
+            var query = new Query(TableName).Select("Username", "Email", "Active", "CreationTime").WhereFalse("Deleted");
 
             if (!string.IsNullOrEmpty(name))
             {
@@ -42,16 +41,14 @@ namespace CoreDapperRepository.Data.Repositories.Mssql.Customers
 
         public virtual async Task<IEnumerable<Customer>> GetAllCustomersAsync()
         {
-            var query = new Query(TableName).Select("Username", "Email", "Active", "CreationTime")
-                .WhereFalse("Deleted");
+            var query = new Query(TableName).Select("Username", "Email", "Active", "CreationTime").WhereFalse("Deleted");
 
             var sqlResult = GetSqlResult(query);
 
             return await GetListAsync(sqlResult.Sql, sqlResult.NamedBindings);
         }
 
-        public virtual async Task<Tuple<int, IEnumerable<Customer>>> GetPagedCustomers(string username, string email,
-            int pageIndex, int pageSize)
+        public virtual async Task<Tuple<int, IEnumerable<Customer>>> GetPagedCustomers(string username, string email, int pageIndex, int pageSize)
         {
             #region TotalCount
 
@@ -71,16 +68,13 @@ namespace CoreDapperRepository.Data.Repositories.Mssql.Customers
 
             SqlResult totalCountResult = GetSqlResult(totalCountQuery);
 
-            int totalCount =
-                await session.Connection.QueryFirstOrDefaultAsync<int>(totalCountResult.Sql,
-                    totalCountResult.NamedBindings);
+            int totalCount = await session.Connection.QueryFirstOrDefaultAsync<int>(totalCountResult.Sql, totalCountResult.NamedBindings);
 
             #endregion
 
             #region Paged Customers
 
-            int totalPage = totalCount <= pageSize ? 1 :
-                totalCount > pageSize && totalCount < (pageSize * 2) ? 2 : totalCount / pageSize; // 总页数
+            int totalPage = totalCount <= pageSize ? 1 : totalCount > pageSize && totalCount < (pageSize * 2) ? 2 : totalCount / pageSize; // 总页数
 
             int midPage = totalPage / 2 + 1; //中间页数，大于该页数则采用倒排优化
 
@@ -102,8 +96,7 @@ namespace CoreDapperRepository.Data.Repositories.Mssql.Customers
 
             bool useDescOrder = pageIndex <= midPage; // 判断是否采取倒排优化
 
-            Query customerQuery = new Query(TableName).Select("Id", "Username", "Email", "Active", "CreationTime")
-                .WhereFalse("Deleted");
+            Query customerQuery = new Query(TableName).Select("Id", "Username", "Email", "Active", "CreationTime").WhereFalse("Deleted");
 
             if (!string.IsNullOrEmpty(username))
             {
@@ -115,8 +108,7 @@ namespace CoreDapperRepository.Data.Repositories.Mssql.Customers
                 customerQuery = customerQuery.WhereStarts("Email", email);
             }
 
-            customerQuery = customerQuery.Limit(isLastPage ? lastPageSize : pageSize)
-                .Offset(useDescOrder ? pageIndex * pageSize : descBound);
+            customerQuery = customerQuery.Limit(isLastPage ? lastPageSize : pageSize).Offset(useDescOrder ? pageIndex * pageSize : descBound);
 
             customerQuery = useDescOrder ? customerQuery.OrderByDesc("Id") : customerQuery.OrderBy("Id");
 
@@ -124,8 +116,7 @@ namespace CoreDapperRepository.Data.Repositories.Mssql.Customers
 
             try
             {
-                var customers =
-                    await session.Connection.QueryAsync<Customer>(customerResult.Sql, customerResult.NamedBindings);
+                var customers = await session.Connection.QueryAsync<Customer>(customerResult.Sql, customerResult.NamedBindings);
 
                 return new Tuple<int, IEnumerable<Customer>>(totalCount, customers);
             }
@@ -155,9 +146,7 @@ namespace CoreDapperRepository.Data.Repositories.Mssql.Customers
             if (customers != null && customers.Any())
             {
                 StringBuilder builder = new StringBuilder(50);
-                builder.AppendFormat(
-                    "INSERT INTO {0}( Username,Email,Active,Deleted,CreationTime ) VALUES ( @Username,@Email,@Active,@Deleted,@CreationTime );",
-                    TableName);
+                builder.AppendFormat("INSERT INTO {0}( Username,Email,Active,Deleted,CreationTime ) VALUES ( @Username,@Email,@Active,@Deleted,@CreationTime );", TableName);
 
                 int result = await ExecuteAsync(builder.ToString(), customers);
 

@@ -1,6 +1,4 @@
-﻿using DapperRepo.Web.Models;
-
-namespace CoreDapperRepository.Web.Models.Customers
+﻿namespace CoreDapperRepository.Web.Models.Customers
 {
     public class SearchCustomerModel : SearchPagedModel
     {

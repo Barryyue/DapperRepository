@@ -1,4 +1,4 @@
-﻿namespace DapperRepo.Web.Models
+﻿namespace CoreDapperRepository.Web.Models
 {
     public class SearchPagedModel
     {
